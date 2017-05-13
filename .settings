@@ -9,8 +9,9 @@ Path="/home/mint/AplicarCambioNomenclaturaSipresa.gambas"
 
 [OpenFile]
 Active=1
-File[1]=".src/Main.module:54.85"
-Count=1
+File[1]=".src/Main.module:0.0"
+Count=2
+File[2]="README.md:95.15"
 
 [Watches]
 Count=0
