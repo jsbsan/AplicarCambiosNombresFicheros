@@ -1,0 +1,120 @@
+' Gambas module file
+
+'
+' AplicarCambioNomenclaturaSipresa
+' sistema de cambio de nomenclatura
+'
+' Copyright (C) Julio Sanchez Berro
+'
+' This program is free software; you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation; either version 2 of the License, or
+' (at your option) any later version.
+'
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+'
+' You should have received a copy of the GNU General Public License
+' along with this program; if not, write to the Free Software
+' Foundation, Inc., 51 Franklin St, Fifth Floor,
+' Boston, MA  02110-1301  USA
+'
+
+Public Sub Main()
+
+  Dim argumento As String
+  Dim lista As New String[]
+  Dim contador As Integer
+  ' Print "Analizo argumentos:"
+  For Each argumento In Application.Args
+    'añadimos todos los argumentos a un array de cadenas
+    lista.add(argumento)
+    'escribo los argumentos:
+    Print "Nº "; contador; ": "; argumento
+    contador += 1
+  Next
+
+  If lista.count = 1 Then
+    Print "No ha puesto archivo de cambio de ordenes..."
+  Else
+    Print "Fichero de lectura: "; lista[1]
+    cambiarNombres(lista[1])
+
+  Endif
+
+End
+
+Public Sub cambiarNombres(n As String)
+
+  Dim contenido As String
+  Dim lineas As String[]
+  Dim columnas As String[]
+  Dim ltmp As String
+  Dim a As Integer
+  Dim comando As String
+
+  contenido = File.Load(pwd() & "/" & n)
+  Print "-------------------------------------------------------------------------------------"
+  Print "Ruta y nombre fichero final: ", pwd() & "/" & n
+  Print "-------------------------------------------------------------------------------------"
+  lineas = Split(contenido, "\n")
+
+  For a = 0 To lineas.Max
+    ltmp = lineas[a]
+
+    columnas = Split(ltmp, "\t")
+
+    If columnas.count <> 0 Then
+      If columnas[3] = "" Then
+        'no hay nada que hacer
+        Print "linea en blanco..."
+        Continue
+      Endif
+
+      If Trim(Upper$(columnas[5])) = Upper$("completa") Or Trim(Upper$(columnas[5])) = Upper$("completo") Then
+        'se trata de un cambio de nombre
+        If Exist(pwd() & "/" & columnas[3]) Then
+          Kill pwd() & "/" & columnas[3]
+
+          Wait 0.1
+
+        Endif
+
+        Copy pwd() & "/" & columnas[4] To pwd() & "/" & Upper$(columnas[3])
+        Print "<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>"
+        Print "Renombrando " & pwd() & "/" & columnas[4] & " a  " & pwd() & "/" & Upper$(columnas[3])
+      Else
+
+        If columnas[10] <> "" Then
+          Print "<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>"
+          Print "Ejecutando el comando: "; columnas[10]
+          comando = Replace(columnas[10], columnas[3], Upper$(columnas[3]))
+          comando = Replace(comando, "ñ", "Ñ")
+          comando = Replace(comando, "á", "Á")
+          comando = Replace(comando, "é", "É")
+          comando = Replace(comando, "í", "Í")
+          comando = Replace(comando, "ó", "Ó")
+          comando = Replace(comando, "ú", "Ú")
+          comando = Replace(comando, "ü", "Ü")
+
+          Shell comando Wait 'Ejecuta y espera a que termina el comando
+
+        Endif
+      Endif
+    Endif
+  Next
+
+End
+
+Public Function pwd() As String ''retorna la ruta actual donde se esta ejecutando el programa
+
+  Dim ruta As String
+
+  Shell "pwd" To ruta
+
+  'ruta = Application.Path
+  Return Replace(ruta, "\n", "")
+
+End

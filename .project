@@ -1,0 +1,12 @@
+# Gambas Project File 3.0
+# Compiled with Gambas 3.9.2
+Title=AplicarCambioNomenclaturaSipresa
+Startup=Main
+Version=0.0.22
+Description="sistema de cambio de nomenclatura"
+Authors="Julio Sanchez Berro"
+Arguments=[["ordenes.txt"]]
+CurrentArgument=0
+TabSize=2
+Language=en_US
+Packager=1
