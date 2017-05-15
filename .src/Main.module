@@ -97,8 +97,12 @@ Public Sub cambiarNombres(n As String)
           comando = Replace(comando, "í", "Í")
           comando = Replace(comando, "ó", "Ó")
           comando = Replace(comando, "ú", "Ú")
-          comando = Replace(comando, "ü", "Ü")
-
+          comando = Replace(comando, "\n", "")
+          comando = Replace(comando, "\t", "")
+          comando = Replace(comando, "/n", "")
+          comando = Replace(comando, "/t", "")
+          comando = Replace(comando, "%0D", "")
+          comando = Replace(comando, "\r", "")
           Shell comando Wait 'Ejecuta y espera a que termina el comando
 
         Endif
