@@ -59,6 +59,7 @@ Public Sub cambiarNombres(n As String)
   Print "-------------------------------------------------------------------------------------"
   Print "Ruta y nombre fichero final: ", pwd() & "/" & n
   Print "-------------------------------------------------------------------------------------"
+  print "Fecha y hora: ";now
   lineas = Split(contenido, "\n")
 
   For a = 0 To lineas.Max
@@ -91,12 +92,12 @@ Public Sub cambiarNombres(n As String)
           Print "<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>"
           Print "Ejecutando el comando: "; columnas[10]
           comando = Replace(columnas[10], columnas[3], Upper$(columnas[3]))
-          comando = Replace(comando, "ñ", "Ñ")
-          comando = Replace(comando, "á", "Á")
-          comando = Replace(comando, "é", "É")
-          comando = Replace(comando, "í", "Í")
-          comando = Replace(comando, "ó", "Ó")
-          comando = Replace(comando, "ú", "Ú")
+      '    comando = Replace(comando, "ñ", "Ñ")
+      '    comando = Replace(comando, "á", "Á")
+       '   comando = Replace(comando, "é", "É")
+       '   comando = Replace(comando, "í", "Í")
+       '   comando = Replace(comando, "ó", "Ó")
+       '   comando = Replace(comando, "ú", "Ú")
           comando = Replace(comando, "\n", "")
           comando = Replace(comando, "\t", "")
           comando = Replace(comando, "/n", "")
