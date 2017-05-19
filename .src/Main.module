@@ -70,20 +70,26 @@ Public Sub cambiarNombres(n As String)
     columnas = Split(ltmp, "\t")
 
 
-if columnas.count < 11 then 
-      print "Error: numero de columnas inferior al minimo necesario"
-      break
-  endif
-  
-
-
-
     If columnas.count <> 0 Then
+    
+    
+    
+       if columnas.count < 11 and columnas.count>0   then 
+          print "Linea de fichero: ";a;"  Error: numero de columnas inferior al minimo necesario"
+          continue
+      endif
+    
+    
       If columnas[3] = "" Then
         'no hay nada que hacer
         Print "linea en blanco..."
         Continue
       Endif
+
+
+ 
+
+
 
       If Trim(Upper$(columnas[5])) = Upper$("completa") Or Trim(Upper$(columnas[5])) = Upper$("completo") Then
         'se trata de un cambio de nombre
