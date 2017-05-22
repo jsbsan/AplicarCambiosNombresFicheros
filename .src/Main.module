@@ -54,6 +54,8 @@ Public Sub cambiarNombres(n As String)
   Dim ltmp As String
   Dim a As Integer
   Dim comando As String
+dim valor3columna as string
+
 
   contenido = File.Load(pwd() & "/" & n)
   Print "-------------------------------------------------------------------------------------"
@@ -67,22 +69,39 @@ Public Sub cambiarNombres(n As String)
 
     ltmp = lineas[a]
 
+if ltmp="" or replace(replace(replace(ltmp,"\t","")," ",""),"\r","")="" then 
+  'no hay nada que hacer
+   Print str$(a+1);": linea en blanco..."
+  Continue
+endif
+
+
     columnas = Split(ltmp, "\t")
 
 
     If columnas.count <> 0 Then
-    
-    
-    
+  
+    try valor3columna=columnas[3]
+    if error then 
+        'es posible, un fallo en el numero de columnas....
+      else
+            if valor3columna="" and  ltmp="" then 
+              'no hay nada que hacer
+              Print str$(a+1);": linea en blanco..."
+              Continue
+            endif
+      endif
+  
+
        if columnas.count < 11 and columnas.count>0   then 
-          print "Linea de fichero: ";a;"  Error: numero de columnas inferior al minimo necesario"
+          print "Linea de fichero: ";a+1;"  Error: numero de columnas inferior al minimo necesario"
           continue
       endif
     
     
       If columnas[3] = "" Then
         'no hay nada que hacer
-        Print "linea en blanco..."
+      Print str$(a+1);": linea en blanco..."
         Continue
       Endif
 
